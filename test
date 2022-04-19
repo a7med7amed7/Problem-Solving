@@ -1,0 +1,62 @@
+-- Initializing Database
+create database University;
+
+
+-- Create Student Table
+CREATE TABLE student(
+   id   INT              NOT NULL,
+   name VARCHAR (20)     NOT NULL,
+   age  INT              NOT NULL,
+   address  CHAR (25) ,
+   gender CHAR(1)NOT NULL,
+   gpa DECIMAL(4,3) NOT NULL,
+   ref_college INT references college(idc),
+   ref_department INT references specialzation(ids),
+
+   PRIMARY KEY (id)
+);
+
+
+-- Add forein keys and relation 
+ALTER TABLE student 
+   ADD FOREIGN KEY (ref_college) REFERENCES college (idc),
+   ADD FOREIGN KEY (ref_department) REFERENCES specialzation (ids);
+
+
+
+-- Create College Table
+CREATE TABLE college (
+   idc          INT        NOT NULL,
+   name VARCHAR (20)     NOT NULL,
+   PRIMARY KEY (idc)
+);
+
+
+-- Create Specialization Table
+CREATE TABLE specialzation (
+   ids          INT        NOT NULL,
+   department VARCHAR (20)     NOT NULL,
+   college_id INT references college(idc),
+   PRIMARY KEY (ids)
+);
+
+
+-- Add forein keys and relation 
+ALTER TABLE specialzation 
+   ADD FOREIGN KEY (college_id) REFERENCES college (idc);
+
+-- Inserting Sample Data
+INSERT INTO college VALUES(1,'FCI');
+INSERT INTO college VALUES(2,'ENG');
+INSERT INTO college VALUES(3,'BIO');
+
+INSERT INTO specialzation VALUES(1,'CS',1);
+INSERT INTO specialzation VALUES(2,'SCI',2);
+INSERT INTO specialzation VALUES(3,'IS',1);
+
+INSERT INTO student VALUES(1,'Ahmed',20,'Cairo','M',3.3,1,1);
+INSERT INTO student VALUES(2,'Ali',19,'Cairo','M',3.7,1,2);
+INSERT INTO student VALUES(3,'Rania',19,'Mansoura','F',2.3,2,1);
+INSERT INTO student VALUES(4,'Saad',21,'Giza','F',3.1,1,2);
+
+select * from student;
